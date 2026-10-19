@@ -3,83 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#0d0f12">
+<meta name="theme-color" content="#0b0d10">
 <title>空房间 · The Room She Left</title>
-<style>html,body{margin:0;padding:0;background:#000;}</style>
-</head>
-<body>
-<div id="game-root" style="margin:0;padding:0;">
 <style>
-#game-root *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-#game-root{--ink:#c9c4b8;--dim:#6b6a63;--blood:#8a2b2b;--amber:#d7a66d;
- font-family:'Courier New',monospace;background:#000;display:flex;justify-content:center;min-height:100vh;align-items:center;}
-#gw{position:relative;width:100%;max-width:420px;height:min(100vh,760px);
- background:#0d0f12;overflow:hidden;color:var(--ink);border:1px solid #1c1f24;
- box-shadow:0 0 40px #000 inset;}
-#gw .vig{position:absolute;inset:0;pointer-events:none;
- background:radial-gradient(ellipse at 50% 42%,transparent 40%,#000 115%);z-index:40;}
-#gw .scan{position:absolute;inset:0;pointer-events:none;z-index:41;opacity:.5;
- background:repeating-linear-gradient(#0000 0 2px,#0000000f 2px 3px);}
-#gw .room{position:absolute;inset:0;background:linear-gradient(#15171b,#0b0d10 70%,#070809);}
-#gw .wall{position:absolute;left:0;right:0;top:0;height:62%;
- background:repeating-linear-gradient(90deg,#141619 0 38px,#111316 38px 40px);border-bottom:2px solid #000;}
-#gw .floor{position:absolute;left:0;right:0;bottom:0;height:38%;
- background:repeating-linear-gradient(#101215 0 26px,#0c0e11 26px 28px);}
-.hot{position:absolute;cursor:pointer;z-index:20;}
-.hot:active{filter:brightness(1.4);}
-.lbl{position:absolute;z-index:21;font-size:10px;color:var(--dim);letter-spacing:1px;pointer-events:none;text-shadow:0 0 4px #000;}
-.photo{top:11%;left:50%;transform:translateX(-50%) rotate(-1deg);width:116px;height:92px;
- background:#1b1d22;border:5px solid #2a2622;box-shadow:0 6px 14px #000;}
-.photo .pp{position:absolute;inset:7px;background:linear-gradient(135deg,#30343c,#1a1c20);overflow:hidden;}
-.photo .fig{position:absolute;bottom:0;width:30px;height:52px;border-radius:14px 14px 0 0;background:#0a0b0d;}
-.photo .f1{left:20px;} .photo .f2{right:20px;}
-.photo .scratch{position:absolute;z-index:3;}
-.photo .scratch i{position:absolute;height:2px;background:#000;transform-origin:left;}
-.bed{bottom:6%;left:4%;width:52%;height:30%;background:linear-gradient(#20222a,#15171c);border:1px solid #000;border-radius:6px 6px 2px 2px;}
-.bed:before{content:'';position:absolute;top:-14px;left:8px;width:40px;height:22px;background:#2a2d35;border-radius:6px;}
-.stand{bottom:7%;right:6%;width:30%;height:24%;background:linear-gradient(#1c1a18,#111010);border:1px solid #000;}
-.drawer{position:absolute;left:12%;right:12%;top:30%;height:26%;background:linear-gradient(#262320,#1a1816);border:1px solid #000;}
-.drawer:after{content:'';position:absolute;top:44%;left:42%;width:16%;height:8%;background:#000;border-radius:3px;}
-.win{top:14%;right:5%;width:26%;height:30%;background:linear-gradient(#0a1420,#06080c);border:6px solid #1a1c20;box-shadow:0 0 18px #0a1420 inset;}
-.win:before,.win:after{content:'';position:absolute;background:#1a1c20;}
-.win:before{left:50%;top:0;bottom:0;width:3px;margin-left:-1px;}
-.win:after{top:50%;left:0;right:0;height:3px;margin-top:-1px;}
-.cal{bottom:40%;left:6%;width:20%;height:16%;background:#15140f;border:1px solid #000;display:flex;flex-direction:column;}
-.cal .top{height:34%;background:var(--blood);}
-.cal .num{flex:1;display:flex;align-items:center;justify-content:center;color:#d8d2c4;font-size:22px;font-weight:bold;}
-.ov{position:absolute;inset:0;z-index:60;background:#000d;display:none;align-items:center;justify-content:center;flex-direction:column;padding:22px;}
+html,body{margin:0;padding:0;background:#000;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+#root{--ink:#cfc9ba;--dim:#6b6a63;--blood:#b23b3b;--amber:#e0a860;
+ font-family:'Courier New',monospace;background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh;}
+#stage{position:relative;width:100%;max-width:430px;aspect-ratio:9/16;max-height:100vh;
+ background:#07080a;overflow:hidden;box-shadow:0 0 50px #000;}
+canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges;}
+#hit{position:absolute;inset:0;z-index:10;}
+.hot{position:absolute;cursor:pointer;}
+.scan{position:absolute;inset:0;pointer-events:none;z-index:14;opacity:.35;
+ background:repeating-linear-gradient(#0000 0 2px,#00000022 2px 3px);}
+.vig{position:absolute;inset:0;pointer-events:none;z-index:15;
+ background:radial-gradient(ellipse at 50% 40%,transparent 42%,#000 118%);}
+.ov{position:absolute;inset:0;z-index:30;background:#000c;display:none;
+ align-items:center;justify-content:center;flex-direction:column;padding:22px;}
 .ov.on{display:flex;}
-.card{width:100%;max-width:300px;background:#141210;border:1px solid #33302a;padding:20px;box-shadow:0 0 30px #000;}
+.card{width:100%;max-width:300px;background:#120f0dEE;border:1px solid #3a352c;padding:20px;
+ box-shadow:0 0 40px #000;backdrop-filter:blur(1px);}
 .card h3{font-size:13px;letter-spacing:2px;color:var(--amber);margin-bottom:12px;}
 .card p{font-size:13px;line-height:1.9;color:var(--ink);white-space:pre-wrap;}
-.x{position:absolute;top:12px;right:16px;font-size:22px;color:var(--dim);cursor:pointer;z-index:61;}
+.x{position:absolute;top:12px;right:18px;font-size:24px;color:var(--dim);cursor:pointer;z-index:31;}
 .lk{display:flex;gap:8px;justify-content:center;margin:16px 0;}
-.lk .d{width:46px;height:60px;background:#000;border:1px solid #3a3630;color:var(--amber);font-size:30px;display:flex;align-items:center;justify-content:center;}
+.lk .d{width:46px;height:60px;background:#000;border:1px solid #4a4336;color:var(--amber);
+ font-size:30px;display:flex;align-items:center;justify-content:center;}
 .pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
-.pad button{padding:12px;background:#1c1a16;color:var(--ink);border:1px solid #33302a;font-size:18px;font-family:inherit;cursor:pointer;}
-.pad button:active{background:#2a2620;}
+.pad button{padding:12px;background:#1c1914;color:var(--ink);border:1px solid #3a352c;
+ font-size:18px;font-family:inherit;cursor:pointer;}
+.pad button:active{background:#2c261c;}
 .msg{text-align:center;font-size:11px;color:var(--blood);height:14px;margin-top:6px;letter-spacing:1px;}
-#inv{position:absolute;bottom:0;left:0;right:0;height:46px;z-index:45;background:#0a0b0dcc;border-top:1px solid #1c1f24;display:flex;align-items:center;gap:8px;padding:0 10px;font-size:10px;color:var(--dim);letter-spacing:1px;}
+#inv{position:absolute;bottom:0;left:0;right:0;height:42px;z-index:16;background:#06070944;
+ border-top:1px solid #1c1f2466;display:flex;align-items:center;gap:8px;padding:0 12px;
+ font-size:10px;color:var(--dim);letter-spacing:1px;}
 #inv .it{color:var(--amber);}
-.full{position:absolute;inset:0;z-index:80;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:30px;text-align:center;}
-.full h2{font-size:16px;letter-spacing:3px;color:var(--ink);margin-bottom:18px;line-height:1.8;}
-.full p{font-size:12px;color:var(--dim);line-height:2;margin-bottom:24px;}
-.full button{padding:12px 26px;background:#1c1a16;color:var(--amber);border:1px solid #33302a;font-family:inherit;font-size:13px;letter-spacing:2px;cursor:pointer;}
-.flick{animation:fl 6s infinite;}
-@keyframes fl{0%,97%,100%{opacity:1}98%{opacity:.6}99%{opacity:.9}}
+.full{position:absolute;inset:0;z-index:40;background:#000;display:flex;align-items:center;
+ justify-content:center;flex-direction:column;padding:30px;text-align:center;}
+.full h2{font-size:17px;letter-spacing:4px;color:var(--ink);margin-bottom:18px;line-height:1.9;}
+.full p{font-size:12px;color:var(--dim);line-height:2;margin-bottom:26px;}
+.full button{padding:12px 28px;background:#1c1914;color:var(--amber);border:1px solid #3a352c;
+ font-family:inherit;font-size:13px;letter-spacing:3px;cursor:pointer;}
 </style>
-<div id="gw">
- <div class="room flick"></div><div class="wall"></div><div class="floor"></div>
- <div class="hot photo" data-act="photo"><div class="pp"><div class="fig f1"></div><div class="fig f2"></div><div class="scratch" id="scr"></div></div></div>
- <div class="lbl" style="top:25%;left:50%;transform:translateX(-50%)">合照</div>
- <div class="hot win" data-act="win"></div>
- <div class="hot cal" data-act="cal"><div class="top"></div><div class="num">6</div></div>
- <div class="hot bed" data-act="bed"></div>
- <div class="hot stand" data-act="stand"></div>
- <div class="hot drawer" data-act="drawer"></div>
- <div class="lbl" style="top:56%;left:14%">日历</div>
- <div class="lbl" style="top:30%;left:50%;transform:translateX(-50%)">抽屉</div>
- <div class="vig"></div><div class="scan"></div>
+</head>
+<body>
+<div id="root"><div id="stage">
+ <canvas id="cv" width="270" height="480"></canvas>
+ <div class="scan"></div><div class="vig"></div>
+ <div id="hit">
+   <div class="hot" data-act="photo" style="left:36%;top:13%;width:28%;height:15%"></div>
+   <div class="hot" data-act="win"   style="left:70%;top:17%;width:24%;height:22%"></div>
+   <div class="hot" data-act="cal"   style="left:6%;top:34%;width:17%;height:15%"></div>
+   <div class="hot" data-act="drawer" style="left:30%;top:46%;width:40%;height:20%"></div>
+   <div class="hot" data-act="stand" style="left:74%;top:60%;width:22%;height:20%"></div>
+   <div class="hot" data-act="bed"   style="left:4%;top:66%;width:46%;height:26%"></div>
+ </div>
  <div id="inv"><span>物品：</span><span id="invlist" class="it">—</span></div>
  <div class="ov" id="ovText"><span class="x" data-close>×</span>
    <div class="card"><h3 id="tTitle"></h3><p id="tBody"></p></div></div>
@@ -88,41 +67,166 @@
      <div class="lk"><div class="d" id="d0">_</div><div class="d" id="d1">_</div><div class="d" id="d2">_</div><div class="d" id="d3">_</div></div>
      <div class="pad" id="pad"></div><div class="msg" id="lmsg"></div></div></div>
  <div class="full" id="intro"><h2>空 房 间</h2>
-   <p>你回到这间屋子。<br>她不在。<br>灯还亮着，像在等谁。<br><br>（点一点房间里的东西）</p>
+   <p>你回到这间屋子。<br>她不在。<br>油灯还亮着，像在等谁。<br><br>（点一点房间里的东西）</p>
    <button id="startBtn">推 门 进 去</button></div>
  <div class="full" id="ending" style="display:none;"><h2 id="endH"></h2><p id="endP"></p>
    <button id="againBtn">再 来 一 次</button></div>
-</div>
-<script>(function(){
- var root=document.getElementById('gw');var CODE="4621";var buf="";
+</div></div>
+<script>
+var cv=document.getElementById('cv'),x=cv.getContext('2d'),W=270,H=480;
+// ---- 调色板 ----
+var P={bg:'#0b0d10',wall1:'#2a2117',wall2:'#241c14',wallD:'#17120c',stain:'#140f0a',
+ floor1:'#1a140e',floor2:'#140f0a',wood:'#3a2c1d',woodD:'#241a11',woodL:'#50402c',
+ lamp:'#e0a860',lampDim:'#8a6a3a',cold:'#2a3a52',coldL:'#6a86a8',frost:'#9fb6cc',
+ photo:'#30343c',ink:'#cfc9ba',blood:'#b23b3b',blk:'#000000',paper:'#b8ad92'};
+function hx(c){return c;}
+function rect(cx,cy,w,h,c){x.fillStyle=c;x.fillRect(cx|0,cy|0,w|0,h|0);}
+// 有序抖动：在两色之间按 t(0..1) 铺点
+function dith(cx,cy,w,h,ca,cb,t){x.fillStyle=ca;x.fillRect(cx,cy,w,h);
+ x.fillStyle=cb;for(var yy=0;yy<h;yy++)for(var xx=0;xx<w;xx++){
+   var v=((xx+cx)*7+(yy+cy)*13)%16/16;if(v<t)x.fillRect(cx+xx,cy+yy,1,1);}}
+function noise(cx,cy,w,h,c,p){x.fillStyle=c;for(var i=0;i<w*h*p;i++){
+ x.fillRect(cx+(Math.random()*w|0),cy+(Math.random()*h|0),1,1);}}
+
+var dust=[];for(var i=0;i<36;i++)dust.push({x:Math.random()*W,y:Math.random()*H*.7,
+ s:.1+Math.random()*.25,r:Math.random()*2+1});
+
+function drawRoom(t){
+ x.fillStyle=P.bg;x.fillRect(0,0,W,H);
+ // 墙：竖条壁纸 + 顶部渐暗 + 水渍
+ for(var cxp=0;cxp<W;cxp+=14){
+   dith(cxp,0,7,300,P.wall1,P.wallD,.35);
+   dith(cxp+7,0,7,300,P.wall2,P.wallD,.45);}
+ // 顶部压暗
+ for(var yy=0;yy<120;yy++){x.fillStyle='rgba(10,8,5,'+(1-yy/120)*.7+')';x.fillRect(0,yy,W,1);}
+ // 水渍霉斑
+ x.fillStyle=P.stain;
+ [[40,70,22],[200,50,16],[150,110,13],[90,150,10]].forEach(function(s){
+   for(var a=0;a<120;a++){var ang=Math.random()*6.28,rr=Math.random()*s[2];
+     x.fillRect(s[0]+Math.cos(ang)*rr|0,s[1]+Math.sin(ang)*rr*.7|0,1,1);}});
+ // 踢脚线
+ rect(0,296,W,6,P.woodD);rect(0,300,W,2,P.blk);
+ // 地板：透视木板
+ for(var yy2=302;yy2<H;yy2+=1){var f=(yy2-302)/(H-302);
+   x.fillStyle=f>.5?P.floor2:P.floor1;x.fillRect(0,yy2,W,1);}
+ for(var bx=-40;bx<W+40;bx+=34){x.strokeStyle=P.blk;x.lineWidth=1;
+   x.beginPath();x.moveTo(W/2+(bx-W/2)*.5,302);x.lineTo(bx,H);x.stroke();}
+ for(var yy3=320;yy3<H;yy3+=1){if((yy3-320)%Math.max(8,(yy3-302)/3|0)<1){
+   x.fillStyle='#0d0a07';x.fillRect(0,yy3,W,1);}}
+
+ // ---- 窗（右上）：冷月光 + 霜 ----
+ var wx=190,wy=84,ww=62,wh=96;
+ rect(wx-6,wy-6,ww+12,wh+12,P.woodD);
+ dith(wx,wy,ww,wh,P.cold,P.coldL,.4);
+ // 月亮
+ x.fillStyle=P.frost;x.beginPath();x.arc(wx+40,wy+30,11,0,6.28);x.fill();
+ x.fillStyle=P.cold;x.beginPath();x.arc(wx+46,wy+26,10,0,6.28);x.fill();
+ // 霜花
+ noise(wx,wy,ww,wh,P.frost,.08);
+ // 窗棂
+ rect(wx+ww/2-1,wy,2,wh,P.woodD);rect(wx,wy+wh/2-1,ww,2,P.woodD);
+ // 冷光洒在地上
+ x.save();x.globalAlpha=.08;x.fillStyle=P.coldL;
+ x.beginPath();x.moveTo(wx,wy+wh);x.lineTo(wx+ww,wy+wh);x.lineTo(wx+ww+40,H);x.lineTo(wx-30,H);x.fill();x.restore();
+
+ // ---- 日历（左墙）----
+ var cxp2=18,cyp=168;rect(cxp2-2,cyp-2,46,70,P.blk);
+ rect(cxp2,cyp,42,22,P.blood);rect(cxp2,cyp+22,42,44,P.paper);
+ x.fillStyle=P.woodD;x.font='bold 26px Courier New';x.textAlign='center';
+ x.fillText('6',cxp2+21,cyp+56);
+ // 红圈
+ x.strokeStyle=P.blood;x.lineWidth=1;x.beginPath();x.arc(cxp2+21,cyp+44,16,0,6.28);x.stroke();
+
+ // ---- 合照（墙中上）----
+ var px=96,py=58,pw=76,ph=60;
+ rect(px-5,py-5,pw+10,ph+10,P.woodL);rect(px-3,py-3,pw+6,ph+6,P.woodD);
+ dith(px,py,pw,ph,P.photo,'#1a1c20',.4);
+ // 两个人影
+ rect(px+16,py+26,20,34,P.blk);rect(px+42,py+26,20,34,P.blk);
+ // 右边脸被划花
+ x.strokeStyle=P.blk;x.lineWidth=1;
+ for(var s2=0;s2<10;s2++){x.beginPath();
+   x.moveTo(px+40+Math.random()*22,py+22+Math.random()*20);
+   x.lineTo(px+40+Math.random()*22,py+22+Math.random()*20);x.stroke();}
+ // 左边人头（完好）
+ x.fillStyle='#2a2d33';x.beginPath();x.arc(px+26,py+22,7,0,6.28);x.fill();
+
+ // ---- 五斗柜 + 抽屉（中）----
+ var dx=78,dy=214,dw=116,dh=96;
+ dith(dx,dy,dw,dh,P.wood,P.woodD,.4);
+ rect(dx,dy,dw,2,P.woodL);rect(dx,dy,2,dh,P.woodL);
+ rect(dx,dy+dh,dw,3,P.blk);
+ // 两格抽屉
+ [0,1].forEach(function(r){var ry=dy+8+r*44;
+   dith(dx+8,ry,dw-16,36,P.woodD,P.blk,.3);
+   rect(dx+8,ry,dw-16,1,P.woodL);
+   // 把手
+   x.fillStyle=P.lamp;x.beginPath();x.arc(dx+dw/2,ry+18,3,0,6.28);x.fill();});
+ // 锁
+ rect(dx+dw/2-4,dy+8+36,8,6,P.blk);x.fillStyle=P.lampDim;x.fillRect(dx+dw/2-1,dy+8+37,2,3);
+
+ // ---- 床头柜（右下）+ 油灯 ----
+ var sx=196,sy=300,sw=58,sh=70;
+ dith(sx,sy,sw,sh,P.wood,P.woodD,.45);
+ rect(sx,sy,sw,2,P.woodL);
+ // 空相框
+ rect(sx+10,sy-36,26,32,P.woodD);rect(sx+13,sy-33,20,26,'#0c0a08');
+ // 油灯 + 暖光
+ var lx=sx+42,ly=sy-8;
+ x.save();var g=x.createRadialGradient(lx,ly,2,lx,ly,70);
+ g.addColorStop(0,'rgba(224,168,96,'+(.5+.12*Math.sin(t/280))+')');
+ g.addColorStop(1,'rgba(224,168,96,0)');x.fillStyle=g;
+ x.fillRect(lx-70,ly-70,140,140);x.restore();
+ rect(lx-5,ly,10,12,P.woodD);x.fillStyle=P.lamp;x.beginPath();
+ x.arc(lx,ly-2,3,0,6.28);x.fill();
+
+ // ---- 床（左下）----
+ var bx2=10,by2=322,bw=120,bh=120;
+ dith(bx2,by2,bw,bh*.5,P.wood,P.woodD,.4);           // 床架
+ dith(bx2,by2-14,bw,30,'#3a3630','#201d18',.4);       // 被子
+ rect(bx2+6,by2-26,34,20,'#4a453c');                   // 枕头
+ // 枕头上的头形凹陷
+ x.fillStyle='#2a2620';x.beginPath();x.arc(bx2+23,by2-16,8,0,6.28);x.fill();
+
+ // ---- 浮尘 ----
+ x.fillStyle='rgba(224,208,170,.5)';
+ dust.forEach(function(d){d.y+=d.s;if(d.y>H*.72){d.y=0;d.x=Math.random()*W;}
+   x.globalAlpha=.3+.3*Math.sin((t/400)+d.x);x.fillRect(d.x|0,d.y|0,1,1);});
+ x.globalAlpha=1;
+ // 整体颗粒
+ if((t|0)%3===0)noise(0,0,W,300,'#000',.004);
+}
+var t0=performance.now();
+function loop(now){drawRoom(now-t0);requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+
+// ---------- 解谜逻辑 ----------
+(function(){
+ var root=document.getElementById('stage');var CODE="4621";var buf="";
  var inv={photo:false,cal:false,win:false,stand:false};
- var scr=document.getElementById('scr');
- for(var i=0;i<9;i++){var s=document.createElement('i');
-   s.style.left=(28+Math.random()*52)+'px';s.style.top=(14+Math.random()*40)+'px';
-   s.style.width=(26+Math.random()*34)+'px';s.style.transform='rotate('+(Math.random()*160-80)+'deg)';scr.appendChild(s);}
  var texts={
   photo:["合照","照片上是两个人。\n右边那个的脸，被人用指甲一下一下划花了，\n只剩左边的人在笑。\n\n照片背面写着一行小字：\n「第 4 个夏天。」\n\n（记住了：4）"],
   cal:["墙上的日历","停在某一天。\n大半页数字都被红笔圈了又圈，\n只有一个数字反复描到发亮——\n\n6 号。\n她说过那天还会来。\n\n（记住了：6）"],
   win:["结霜的窗","玻璃上有一层白雾。\n你凑近，呵一口气，\n雾里浮出一个被谁提前写好的数字：\n\n2\n\n下面还有一行快化掉的小字：\n「别走。」\n\n（记住了：2）"],
-  stand:["床头柜","抽屉拉不开，锁着。\n柜面上有一个相框，空的。\n相框的卡槽里卡着一张小纸片，\n上面只有一个数字：\n\n1\n\n（记住了：1）"],
-  bed:["床","被子叠得整整齐齐，\n枕头上有一个浅浅的头形，\n像有人刚躺过，又像很久没人躺了。\n枕头底下什么都没有。\n只有一点凉。"]
+  stand:["床头柜","油灯旁有一个空相框。\n相框的卡槽里卡着一张小纸片，\n上面只有一个数字：\n\n1\n\n（记住了：1）"],
+  bed:["床","被子叠得整整齐齐，\n枕头上有一个浅浅的头形，\n像有人刚躺过，又像很久没人躺了。\n只有一点凉。"]
  };
  function invRender(){var k=[];if(inv.photo)k.push('4');if(inv.cal)k.push('6');if(inv.win)k.push('2');if(inv.stand)k.push('1');
    document.getElementById('invlist').textContent=k.length?('已找到 '+k.length+'/4 个数字'):'—';}
- function openText(act){var t=texts[act];if(!t)return;
-   document.getElementById('tTitle').textContent=t[0];document.getElementById('tBody').textContent=t[1];
+ function openText(act){var tt=texts[act];if(!tt)return;
+   document.getElementById('tTitle').textContent=tt[0];document.getElementById('tBody').textContent=tt[1];
    document.getElementById('ovText').classList.add('on');if(act in inv){inv[act]=true;invRender();}}
  function openLock(){document.getElementById('ovLock').classList.add('on');draw();}
- function draw(){for(var i=0;i<4;i++){document.getElementById('d'+i).textContent=buf[i]||'_';}}
+ function draw(){for(var i=0;i<4;i++)document.getElementById('d'+i).textContent=buf[i]||'_';}
  root.addEventListener('click',function(e){
    if(e.target.hasAttribute('data-close')){e.target.parentNode.classList.remove('on');return;}
    var h=e.target.closest('.hot');if(!h)return;var act=h.getAttribute('data-act');
-   if(act==='drawer'){openLock();}else{openText(act);}});
+   if(act==='drawer')openLock();else openText(act);});
  var pad=document.getElementById('pad');
  [1,2,3,4,5,6,7,8,9,'←',0,'✓'].forEach(function(n){
    var b=document.createElement('button');b.textContent=n;
-   b.onclick=function(){if(n==='←'){buf=buf.slice(0,-1);}
-     else if(n==='✓'){check();return;}else if(buf.length<4){buf+=n;}draw();};pad.appendChild(b);});
+   b.onclick=function(){if(n==='←')buf=buf.slice(0,-1);
+     else if(n==='✓'){check();return;}else if(buf.length<4)buf+=n;draw();};pad.appendChild(b);});
  function check(){var m=document.getElementById('lmsg');
    if(buf.length<4){m.textContent='还差几位';return;}
    if(buf===CODE){m.textContent='咔哒——锁开了';setTimeout(ending,900);}
@@ -136,7 +240,7 @@
  document.getElementById('againBtn').onclick=function(){buf="";for(var k in inv)inv[k]=false;invRender();draw();
    document.getElementById('ending').style.display='none';document.getElementById('intro').style.display='flex';};
  invRender();
-})();</script>
-</div>
+})();
+</script>
 </body>
 </html>
